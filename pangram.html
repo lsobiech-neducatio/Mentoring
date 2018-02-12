@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+  <style>
+  body {
+    max-width: 650px;
+    height: 100vh;
+    margin: auto;
+    padding: 4em;
+    font-size: 1.5em;
+    font-family: sans-serif;
+    background: linear-gradient(to bottom right, #000, #ffbb33);
+    background-repeat: no-repeat;
+    color: #fff;
+  }
+  #pangram {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid black;
+    padding: 7px;
+    font-size: 1em;
+  }
+  </style>
+</head>
+<body>
+<p>Check if your sentence is a pangram:</p>
+<input id="pangram" type="text" value="Enter your sentence..." />
+<p id="result"></div>
+
+<script>
+const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
+"m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+let missingLetters = (sentence) => {
+  let sentence = document.getElementById("pangram");
+  sentence = sentence.toLowerCase();
+  let countMissingLetters = 0;
+
+  for (let missingLettersIndex = 0; i < letters.length; missingLettersIndex++) {
+     var letter = letters[missingLettersIndex];
+     if (sentence.indexOf(letter) > -1)
+     countMissingLetters++;
+  }
+
+  let result = document.getElementById("result");
+  if (countMissingLetters == 26) {
+    console.log("Your sentence is a pangram.");
+  } else {
+    console.log("Your sentence is not a pangram.");
+  }
+}
+
+
+
+</script>
+</body>
+</html>
