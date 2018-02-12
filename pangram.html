@@ -25,31 +25,40 @@
 </head>
 <body>
 <p>Check if your sentence is a pangram:</p>
-<input id="pangram" type="text" value="Enter your sentence..." />
-<p id="result"></div>
+<input id="pangram" type="text" placeholder="Enter your sentence..." />
+<button id="button">Check</button>
 
 <script>
 const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
 "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
 let missingLetters = (sentence) => {
-  let sentence = document.getElementById("pangram");
-  sentence = sentence.toLowerCase();
   let countMissingLetters = 0;
 
-  for (let missingLettersIndex = 0; i < letters.length; missingLettersIndex++) {
+  let isPangram = true;
+  for (let missingLettersIndex = 0; missingLettersIndex < letters.length; missingLettersIndex++) {
      var letter = letters[missingLettersIndex];
-     if (sentence.indexOf(letter) > -1)
-     countMissingLetters++;
+     if (sentence.indexOf(letter) === -1){
+       isPangram = false;
+       break;
+     }
   }
 
   let result = document.getElementById("result");
-  if (countMissingLetters == 26) {
+  if (isPangram) {
     console.log("Your sentence is a pangram.");
   } else {
     console.log("Your sentence is not a pangram.");
   }
 }
+
+const button = document.getElementById('button');
+button.addEventListener('click', () => {
+  let sentence = document.getElementById("pangram");
+  sentence = sentence.value.toLowerCase();
+  missingLetters(sentence);
+  console.log(sentence);
+})
 
 
 
