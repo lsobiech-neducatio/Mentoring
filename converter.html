@@ -2,28 +2,53 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <style>
+    body {
+
+    }
+
+
+
+    </style>
 </head>
 <body>
+  <input id="num" type="text" placeholder="Enter a nuber between 1 and 3999" />
+  <button id="start">Check</button>
+  <p id="result"></p>
+
+
+
 <script>
-let convertToRoman = (num) => {
+const num = document.getElementById('num');
+const start = document.getElementById('start');
+let result = document.getElementById('result');
+console.dir(result);
 
-  const decimalValue = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
-  const romanNumeral = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX",
-  "V", "IV", "I"];
+start.addEventListener('click', function() {
 
-let romanised = '';
+  let convertToRoman = (num) => {
 
-for (let i = 0; i < decimalValue.length; i++) {
-  while (decimalValue[i] <= num) {
-    romanised += romanNumeral[i];
-    num -= decimalValue[i];
-  }
-}
+    const decimalValue = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+    const romanNumeral = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX",
+    "V", "IV", "I"];
+
+    romanised = '';
+
+    for (let i = 0; i < decimalValue.length; i++) {
+      while (decimalValue[i] <= num) {
+        romanised += romanNumeral[i];
+        num -= decimalValue[i];
+      }
+    }
 
 return romanised;
+console.log(romanised);
 }
 
-console.log(convertToRoman(3));
+
+
+result.innerText = convertToRoman("num");
+});
 </script>
 </body>
 </html>

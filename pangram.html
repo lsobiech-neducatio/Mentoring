@@ -46,9 +46,9 @@ let missingLetters = (sentence) => {
 
   let result = document.getElementById("result");
   if (isPangram) {
-    console.log("Your sentence is a pangram.");
+    result.innerText = "Your sentence is a pangram";
   } else {
-    console.log("Your sentence is not a pangram.");
+    result.innerText = "Your sentence is not a pangram";
   }
 }
 

@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+  <style>
+  body {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 4em;
+    font-size: 1.5em;
+    font-family: sans-serif;
+    background-color: #163846;
+    color: #fff;
+}
+
+#max {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid black;
+  padding: 7px;
+  font-size: 1em;
+  margin-bottom: 5px;
+}
+
+#start {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #DAB046;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 3px #999;
+}
+
+#start:hover {background-color: #ae8c38;}
+
+#start:active {
+  background-color: #ae8c38;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
+
+#result {
+  text-align: right;
+}
+
+  </style>
+</head>
+<body>
+
+  <label for="max">Enter a number:<br/></label><input type="text" id="max">
+  <button id="start">OK</button>
+  <p id="result"></p>
+
+<script>
+
+start.addEventListener('click', function() {
+let getPrimeNumbers = (max) => {
+let max = document.getElementById('max');
+let divisors = 0;
+for (i = 1; i < max; i++) {
+// checks each number on divisibility on i number, doesn't check divisibility on 1
+    for (j = 2; j <= i; j++) {
+        if (i % j === 0) {
+// counts divisors
+        divisors++;
+        }
+    }
+// if only one divisor exists, log it to the console
+    if (divisors === 1) {
+        console.log(i);
+    }
+// makes counter `divisors` equal 0 for next loop
+    divisors = 0;
+}
+}
+  result.innerText = getPrimeNumbers(100);
+});
+</script>
+</body>
+</html>
