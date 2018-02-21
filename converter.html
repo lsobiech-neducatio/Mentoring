@@ -6,9 +6,6 @@
     body {
 
     }
-
-
-
     </style>
 </head>
 <body>
@@ -27,12 +24,12 @@ console.dir(result);
 start.addEventListener('click', function() {
 
   let convertToRoman = (num) => {
-
+    console.log(num)
     const decimalValue = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
     const romanNumeral = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX",
     "V", "IV", "I"];
 
-    romanised = '';
+    let romanised = '';
 
     for (let i = 0; i < decimalValue.length; i++) {
       while (decimalValue[i] <= num) {
@@ -41,13 +38,11 @@ start.addEventListener('click', function() {
       }
     }
 
-return romanised;
-console.log(romanised);
-}
+    return romanised;
+    console.log(romanised);
+  }
 
-
-
-result.innerText = convertToRoman("num");
+  result.innerText = convertToRoman(num.value);
 });
 </script>
 </body>

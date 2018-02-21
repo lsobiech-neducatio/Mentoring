@@ -17,14 +17,14 @@
 
 
 <label for="pesel">Enter your PESEL number: </label><input type="text" id="pesel"><br/>
+<label for="test">TESt</label><input type="checkbox" id=test>
 <button id="start">Validate</button>
 <p id="result"></p>
 
 <script>
-  const peselInput = document.getElementById('pesel');
+  const peselInput = document.getElementById('pesel').value;
   const start = document.getElementById('start');
   const result = document.getElementById('result');
-  console.dir(result);
 
   start.addEventListener('click', function() {
     let isValid = true;
