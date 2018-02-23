@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>Icebox</title>
+  <style>
+
+/* #particle {
+  width: 10px;
+  height: 10px
+  background-color: #000; */
+
+}
+  </style>
+</head>
+<body>
+  <label>Icebox size: </label> <input id="boxSize" type="number" value="300"/>
+  <label>Particles: </label><input id="particlesNum" type="number" value="500"/>
+  <button id="button">START</button>
+  <div id="icebox"></div>
+  <div id="particle"></div>
+
+<script>
+
+start.addEventListener("click", fuction() {
+  const button = getElementById("button");
+
+  let displayIcebox = () => {
+    const icebox = getElementById("icebox");
+    const boxSize = getElementById("boxSize");
+    document.body.appendChild(icebox);
+    icebox.style.height = `${boxSize}px`;
+    icebox.style.width = `${boxSize}px`;
+    icebox.style.border = "thick solid #000";
+    icebox.style.position = "relative";
+
+    let displayParticle = () => {
+      const particlesNum = getElementById("particlesNum");
+      const particle = getElementById("particle");
+      let particles = [];
+      for (particles = 0; particles <= particlesNum.value; particles++) {
+        icebox.appendChild(particle);
+        particle.style.height = "10px";
+        particle.style.width = "10px";
+        particle.style.backgroundColor = "#000";
+        particle.style.position = "absolute";
+        const x = 10;
+        const y = 10;
+        particle.style.transform = `translate(${x}px, ${y}px)`;
+      }
+      return particle;
+    }
+    return icebox;
+  }
+  displayIcebox(boxSize.value, particlesNum.value);
+});
+
+</script>
+</body>
+</html>
