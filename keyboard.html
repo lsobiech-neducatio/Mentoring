@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>Keyboard</title>
+  <style>
+
+    #icebox {
+      margin-top: 15px;
+    }
+
+/* #particle {
+  width: 10px;
+  height: 10px
+  background-color: #000;
+} */
+
+  </style>
+</head>
+<body>
+  <label>Icebox size: </label> <input id="boxSize" type="number" value="300"/>
+  <button id="button">START</button>
+  <div id="icebox"></div>
+  <div id="particle"></div>
+
+<script>
+const boxSize = document.getElementById("boxSize");
+
+let displayParticle = () => {
+  let particle = document.getElementById("particle");
+  particle.style.height = "10px";
+  particle.style.width = "10px";
+  particle.style.backgroundColor = "#000";
+  particle.style.position = "absolute";
+  const size = boxSize.value;
+  const x = Math.random() * (size - 10);
+  const y = Math.random() * (size - 10);
+  particle.style.transform = `translate(${x}px, ${y}px)`;
+  return particle;
+}
+
+let displayIcebox = () => {
+  const icebox = document.getElementById("icebox");
+  const size = boxSize.value;
+
+  document.body.appendChild(icebox);
+  icebox.style.height = `${size}px`;
+  icebox.style.width = `${size}px`;
+  icebox.style.border = "thick solid #000";
+  icebox.style.position = "relative";
+  return icebox;
+}
+
+const button = document.getElementById("button");
+button.addEventListener("click", () => {
+  displayIcebox(boxSize.value);
+  displayParticle();
+});
+
+window.addEventListener("keydown", event => {
+  switch(event.keyCode) {
+    case 39: // right
+      particle.style.transform = `translateX(10px)`;
+    break;
+    case 37: // left
+      particle.style.transform = `translateX(-10px)`;
+    break;
+    case 38: // up
+      particle.style.transform = `translateY(-10px)`;
+    break;
+    case 40: // down
+      particle.style.transform = `translateY(10px)`;
+    break;
+  }
+  console.log(event.keyCode);
+})
+
+// window.addEventListener("keydown", event => {
+//   const size = boxSize.value;
+//   const rightDown = (size - 10) + 10;
+//   const leftUp = (size - 10) - 10;
+//   switch(event.keyCode) {
+//     case 39: // right
+//       particle.style.transform = `translateX(${rightDown}px)`;
+//     break;
+//     case 37: // left
+//       particle.style.transform = `translateX(${leftUp}px)`;
+//     break;
+//     case 38: // up
+//       particle.style.transform = `translateX(${leftUp}px)`;
+//     break;
+//     case 40: // down
+//       particle.style.transform = `translateX(${rightDown}px)`;
+//     break;
+//   }
+//   console.log(event.keyCode);
+// })
+
+</script>
+</body>
+</html>
