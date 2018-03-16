@@ -7,23 +7,69 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>PESEL</title>
   <style>
+    body {
+      padding: 10px 30px;
+      width: 50%;
+    }
+
+    .validator {
+      display: inline-block;
+      background-color: #f2f2f2;
+      padding: 10px;
+      font: 15px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    }
+
+    input[type="text" i] {
+        padding: 5px;
+        margin: 5px 2px 5px 20px;
+    }
+
+    .required {
+      color: red;
+      font-weight: bold;
+    }
+
+    #start {
+      margin-left: 10px;
+      background: #4B99AD;
+      padding: 8px 15px 8px 15px;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    #result {
+      font: 20px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+      margin: 5px 0 0 10px;
+      color: red;
+      }
+
+      h1 {
+      font: 40px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+      margin: 0;
+      }
+
+      hr {
+        margin: 0 0 30px 0;
+      }
 
   </style>
 </head>
 <body>
 
 <!-- http://www.algorytm.org/numery-identyfikacyjne/pesel.html -->
-
-
+<h1>PESEL validator</h1>
+<hr>
+<div class="validator">
 <table>
-<tr><td>PESEL:</td><td><input id="pesel" type="text"/>
+<tr><td>PESEL</td><td><input id="pesel" type="text" placeholder="Enter a PESEL number..."/><span class="required">*</span>
 <button id="start">Validate</button>
-<tr><td>Year:</td><td><input id="year" type="text"/></td></tr>
-<tr><td>Month:</td><td><input id="month" type="text"/></td></tr>
-<tr><td>Day:</td><td><input id="day" type="text"/></td></tr>
-<tr><td>Sex:</td><td><input id="sex" type="text"/></td></tr>
+<tr><td>Year</td><td><input id="year" type="text"/></td></tr>
+<tr><td>Month</td><td><input id="month" type="text"/></td></tr>
+<tr><td>Day</td><td><input id="day" type="text"/></td></tr>
+<tr><td>Sex</td><td><input id="sex" type="text"/></td></tr>
 </table>
-
+</div>
 <p id="result"></p>
 
 <script>
@@ -35,36 +81,39 @@
   const resultDay = document.getElementById("day");
   const resultSex = document.getElementById("sex");
 
-  start.addEventListener("click", function() {
-    let isValid = true;
+  const peselValidation = (peselInput) => {
 
-    const peselValidation = (peselInput) => {
 
-      //indicates the numbers of pesel that mean the checksum
-      let checkSum = peselInput.substr(9, 2);
-      let sum = peselInput.substring(0, 1) * 1 + peselInput.substring(1, 2) * 3
-        + peselInput.substring(2, 3) * 7 + peselInput.substring(3, 4) * 9
-        + peselInput.substring(4, 5) * 1 + peselInput.substring(5, 6) * 3
-        + peselInput.substring(6, 7) * 7 + peselInput.substring(7, 8) * 9
-        + peselInput.substring(8, 9) * 1 + peselInput.substring(9, 10) * 3;
+    //indicates the numbers of pesel that mean the checksum
+    let checkSum = peselInput.substr(10, 1);
+    let sum = peselInput.substring(0, 1) * 1 + peselInput.substring(1, 2) * 3
+      + peselInput.substring(2, 3) * 7 + peselInput.substring(3, 4) * 9
+      + peselInput.substring(4, 5) * 1 + peselInput.substring(5, 6) * 3
+      + peselInput.substring(6, 7) * 7 + peselInput.substring(7, 8) * 9
+      + peselInput.substring(8, 9) * 1 + peselInput.substring(9, 10) * 3;
 
-      // checks the checksum
-      if ((10-sum ) % 10 == checkSum) {
-        return true;
-      } else {
-        return false;
-      }
+
+    if (peselInput.length > 0 && peselInput.length < 11) {
+      result.innerText = "PESEL number is too short!";
+    } else if (peselInput.length > 11) {
+          result.innerText = "PESEL number is too long!";
+    } else if (peselInput.length == 0) {
+      result.innerText = "'PESEL' cannot be empty!";
+    } else if (10-(sum % 10) != checkSum) {
+        result.innerText = "PESEL is invalid!";
+    } else {
+
 
       // indicates the numbers of pesel that mean year, month, and day of birth
-      const year = peselInput.substring(0, 2);
-      const month = peselInput.substring(2, 4);
-      const day = peselInput.substring(4, 6);
+      let year =  +peselInput.substring(0, 2);
+      let month = +peselInput.substring(2, 4);
+      const day = +peselInput.substring(4, 6);
 
       // cheks numbers added to months in order to recognise the century
       if (month > 80) {
         year += 1800;
         month -= 80;
-      } else if(month > 60 && month < 80) {
+      } else if (month > 60 && month < 80) {
           year += 2200;
           month -= 60;
       } else if (month > 40 && month < 60) {
@@ -75,36 +124,57 @@
           month -= 20;
       } else {
           year += 1900;
-      }
+        }
 
-      resultYear.innerText = year;
-      resultMonth.innerText = month;
-      resultDay.innerText = day;
+        resultYear.value = year;
+        resultMonth.value = month;
+        resultDay.value = day;
 
-      // indicates the numbers of pesel that mean sex
-      let sex = peselInput.substring(6, 10);
+        // indicates the numbers of pesel that mean sex
+        let sex = peselInput.substring(6, 10);
 
-      // checks if male or female
-      const gender = sex % 2 === 0 ? "female" : "male";
+        // checks if male or female
+        const gender = sex % 2 === 0 ? "female" : "male";
 
-      resultSex.innerText = gender;
+        resultSex.value = gender;
 
-    /*  if (sex % 2 == 0) {
-        console.log('female');
-      } else {
-        return 'male';
-      } */
+    }};
 
-    }
+  /*  if (sex % 2 == 0) {
+      console.log('female');
+    } else {
+      return 'male';
+    } */
 
-    isValid = peselValidation(peselInput.value);
+    // checks and returns the checksum
+  //   return 10-(sum % 10) == checkSum;
+  // // To jest równoważne:
+  //   if (10-(sum % 10) == checkSum) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
 
-    if(isValid)
-      result.innerText = "PESEL is Valid";
-    else
-      result.innerText = "PESEL is Invalid";
+
+
+
+  start.addEventListener("click", function() {
+      result.innerText = "";
+      resultYear.value = "";
+      resultMonth.value = "";
+      resultDay.value = "";
+      resultSex.value = "";
+
+      peselValidation(peselInput.value);
+
+  // result.innerText = isValid ? "PESEL is Valid" : "PESEL is Invalid";
+  // if(isValid)
+  //   result.innerText = "PESEL is Valid";
+  // else
+  //   result.innerText = "PESEL is Invalid";
+  // });
+  //  result.innerText = `PESEL is ${isValid ? "Valid" : "Invalid"}`;
   });
-
 
 </script>
 </body>

@@ -61,38 +61,10 @@
   <p id="result2"></p>
 
 <script>
-// Array elemetów
-// document.getElementsByTagName('p');
-// document.getElementsByClassName('test');
-// document.querySelectorAll('p.test > *');
-
-// Pojedyńczy element
-// document.querySelector('p.test > *');
-// document.getElementById('result');
-
-
-// const jakisUl = document.createElement("ul");
-// jakisUl.id = "jakisid";
-// jakisUl.className = "jakies rozne klasy";
-// jakisUl.classList.add('jakas-klasa');
-// jakisUl.classList.remove('rozne');
-// jakisUl.style.height = "200px";
-// jakisUl.style.width = "200px";
-// jakisUl.style.left = "200px";
-// jakisUl.style.position = "absolute";
-// jakisUl.style.backgroundColor = "red";
-// jakisUl.style['background-color'] = "red";
-// const x = 100;
-// const y = 10;
-// jakisUl.style.transform = `translate(${x}px, ${y}px)`;
-
-// document.body.appendChild(jakisUl);
 
 const result = document.getElementById('result');
 
-// result.appendChild(jakisUl);
 
-// const result2 = document.getElementById('result2');
 start.addEventListener('click', function() {
   const results = [];
   let max = document.getElementById('max').value;
@@ -113,7 +85,6 @@ start.addEventListener('click', function() {
     divisors = 0;
   }
   result.innerText = results.join(', ');
-  // result2.innerHTML = "<p>" + results.join(', ') + "</p>";
 
 });
 </script>

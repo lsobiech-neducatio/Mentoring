@@ -8,50 +8,61 @@
       margin-top: 15px;
     }
 
-/* #particle {
+
+.particle {
   width: 10px;
-  height: 10px
+  height: 10px;
   background-color: #000;
-} */
+  position: absolute;
+}
 
   </style>
 </head>
 <body>
   <label>Icebox size: </label> <input id="boxSize" type="number" value="300"/>
   <button id="button">START</button>
-  <div id="icebox"></div>
+  <div id="icebox">
   <div id="particle"></div>
+  </div>
+
 
 <script>
 const boxSize = document.getElementById("boxSize");
+let maxPosition;
+let particle;
 
 let displayParticle = () => {
-  let particle = document.getElementById("particle");
-  particle.style.height = "10px";
-  particle.style.width = "10px";
-  particle.style.backgroundColor = "#000";
-  particle.style.position = "absolute";
+  particle = document.getElementById("particle");
+  particle.classList.add('particle');
+  // particle.style.height = "10px";
+  // particle.style.width = "10px";
+  // particle.style.backgroundColor = "#000";
+  // particle.style.position = "absolute";
   const size = boxSize.value;
   const x = Math.random() * (size - 10);
   const y = Math.random() * (size - 10);
+
+  particle.x = x;
+  particle.y = y;
   particle.style.transform = `translate(${x}px, ${y}px)`;
-  return particle;
+  // return particle;
 }
 
 let displayIcebox = () => {
   const icebox = document.getElementById("icebox");
   const size = boxSize.value;
 
-  document.body.appendChild(icebox);
+//  document.body.appendChild(icebox);
   icebox.style.height = `${size}px`;
   icebox.style.width = `${size}px`;
   icebox.style.border = "thick solid #000";
   icebox.style.position = "relative";
-  return icebox;
+  // return icebox;
 }
 
 const button = document.getElementById("button");
 button.addEventListener("click", () => {
+  maxPosition = boxSize.value - 10
   displayIcebox(boxSize.value);
   displayParticle();
 });
@@ -59,18 +70,32 @@ button.addEventListener("click", () => {
 window.addEventListener("keydown", event => {
   switch(event.keyCode) {
     case 39: // right
-      particle.style.transform = `translateX(10px)`;
+      particle.x += 10;
+      //particle.style.transform = `translateX(10px)`;
     break;
     case 37: // left
-      particle.style.transform = `translateX(-10px)`;
+    particle.x -= 10;
+      // particle.style.transform = `translateX(-10px)`;
     break;
     case 38: // up
-      particle.style.transform = `translateY(-10px)`;
+    particle.y -= 10;
+      // particle.style.transform = `translateY(-10px)`;
     break;
     case 40: // down
-      particle.style.transform = `translateY(10px)`;
+    particle.y += 10;
+      // particle.style.transform = `translateY(10px)`;
     break;
   }
+
+
+  if(particle.x > maxPosition) particle.x = maxPosition;
+  if(particle.y > maxPosition) particle.y = maxPosition;
+  if(particle.x < 0) particle.x = 0;
+  if(particle.y < 0) particle.y = 0;
+
+
+  particle.style.transform = `translate(${particle.x}px, ${particle.y}px)`;
+
   console.log(event.keyCode);
 })
 

@@ -4,12 +4,6 @@
   <title>Icebox</title>
   <style>
 
-/* #particle {
-  width: 10px;
-  height: 10px
-  background-color: #000; */
-
-}
   </style>
 </head>
 <body>
@@ -21,12 +15,13 @@
 
 <script>
 const boxSize = document.getElementById("boxSize");
+let particles = [];
 
 let displayParticle = () => {
   const particlesNum = document.getElementById("particlesNum");
 
-  let particles = [];
-  for (particles = 0; particles <= particlesNum.value; particles++) {
+
+  for (let i = 0; i < particlesNum.value; i++) {
     const particle = document.createElement("div");
     icebox.appendChild(particle);
     particle.style.height = "10px";
@@ -37,8 +32,9 @@ let displayParticle = () => {
     const x = Math.random() * (size - 10);
     const y = Math.random() * (size - 10);
     particle.style.transform = `translate(${x}px, ${y}px)`;
+    particles[i] = particle;
   }
-  return particle;
+  console.log(particles)
 }
 
 let displayIcebox = () => {
@@ -50,14 +46,23 @@ let displayIcebox = () => {
   icebox.style.width = `${size}px`;
   icebox.style.border = "thick solid #000";
   icebox.style.position = "relative";
+}
 
-  return icebox;
+let clearIcebox = () => {
+  for (let i = 0; i < particles.length; i++) {
+    let particle = particles[i];
+    icebox.removeChild(particle);
+  }
+
+  particles = [];
 }
 
 const button = document.getElementById("button");
 button.addEventListener("click", () => {
+  clearIcebox();
   displayIcebox(boxSize.value, particlesNum.value);
   displayParticle();
+
 });
 
 </script>
