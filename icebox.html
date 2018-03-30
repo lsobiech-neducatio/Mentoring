@@ -31,6 +31,9 @@ let displayParticle = () => {
     const size = boxSize.value;
     const x = Math.random() * (size - 10);
     const y = Math.random() * (size - 10);
+
+
+
     particle.style.transform = `translate(${x}px, ${y}px)`;
     particles[i] = particle;
   }
@@ -64,6 +67,13 @@ button.addEventListener("click", () => {
   displayParticle();
 
 });
+
+function draw() {
+  console.log('draw')
+  //przesuń particla w losową stronę (po gridzie) -> Math.random(8 kierunków)
+}
+
+setInterval(draw, 1000);
 
 </script>
 </body>

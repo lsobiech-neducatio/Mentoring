@@ -9,17 +9,18 @@
     }
 
 
-.particle {
+/* .particle {
   width: 10px;
   height: 10px;
   background-color: #000;
   position: absolute;
-}
+} */
 
   </style>
 </head>
 <body>
-  <label>Icebox size: </label> <input id="boxSize" type="number" value="300"/>
+  <label>Icebox size: <input id="boxSize" type="number" value="300"/></label>
+  <label>Particle size: <input id="particleSize" type="number" value="10"/></label>
   <button id="button">START</button>
   <div id="icebox">
   <div id="particle"></div>
@@ -28,32 +29,64 @@
 
 <script>
 const boxSize = document.getElementById("boxSize");
+const particleSize = document.getElementById("particleSize");
+let pSize;
 let maxPosition;
-let particle;
+let particle = document.getElementById("particle");
 
-let displayParticle = () => {
-  particle = document.getElementById("particle");
-  particle.classList.add('particle');
-  // particle.style.height = "10px";
-  // particle.style.width = "10px";
-  // particle.style.backgroundColor = "#000";
-  // particle.style.position = "absolute";
+function displayParticle() {
+  console.log(pSize)
+  particle.classList.add("particle");
+  particle.style.height = `${pSize}px`;
+  particle.style.width = `${pSize}px`;
+  particle.style.backgroundColor = "#000";
+  particle.style.position = "absolute";
   const size = boxSize.value;
-  const x = Math.random() * (size - 10);
-  const y = Math.random() * (size - 10);
+  const x = Math.floor(Math.random() * (size - pSize) / pSize)*pSize;
+  const y = Math.floor(Math.random() * (size - 1)); // -> tak ma być
+
 
   particle.x = x;
   particle.y = y;
-  particle.style.transform = `translate(${x}px, ${y}px)`;
+  particle.style.transform = `translate(${x * pSize}px, ${y * pSize}px)`;
   // return particle;
 }
+
+
+
+// class Particle {
+//   constructor(x, y) {
+//     this.x = x;
+//     this.y = y;
+//   }
+//
+//   set state(stateName) {
+//     this._state = stateName;
+//   }
+//
+//   setState(stateName) {
+//     this._state = stateName;
+//   }
+// }
+//
+//
+// const p = new Particle(10, 50);
+// p.state = 'frozen';
+//
+// //p.setState('frozen');
+//
+// const a = p.state;
+//
+//
+// new Particle(10, 10);
+
 
 let displayIcebox = () => {
   const icebox = document.getElementById("icebox");
   const size = boxSize.value;
 
 //  document.body.appendChild(icebox);
-  icebox.style.height = `${size}px`;
+  icebox.style.height = `${size * pSize}px`; // tak ma być
   icebox.style.width = `${size}px`;
   icebox.style.border = "thick solid #000";
   icebox.style.position = "relative";
@@ -62,28 +95,30 @@ let displayIcebox = () => {
 
 const button = document.getElementById("button");
 button.addEventListener("click", () => {
-  maxPosition = boxSize.value - 10
-  displayIcebox(boxSize.value);
+  pSize = Number(particleSize.value);
+  maxPosition = boxSize.value - 1;
+  displayIcebox();
   displayParticle();
 });
 
 window.addEventListener("keydown", event => {
+  console.dir(particle)
   switch(event.keyCode) {
     case 39: // right
-      particle.x += 10;
+      particle.x += 1;
       //particle.style.transform = `translateX(10px)`;
     break;
     case 37: // left
-    particle.x -= 10;
+    particle.x -= 1;
       // particle.style.transform = `translateX(-10px)`;
     break;
     case 38: // up
-    particle.y -= 10;
+    particle.y -= pSize;
       // particle.style.transform = `translateY(-10px)`;
     break;
     case 40: // down
-    particle.y += 10;
-      // particle.style.transform = `translateY(10px)`;
+    particle.y += pSize;
+      // particle.sty le.transform = `translateY(10px)`;
     break;
   }
 
@@ -94,8 +129,8 @@ window.addEventListener("keydown", event => {
   if(particle.y < 0) particle.y = 0;
 
 
-  particle.style.transform = `translate(${particle.x}px, ${particle.y}px)`;
-
+  particle.style.transform = `translate(${particle.x * pSize}px, ${particle.y * pSize}px)`;
+// {a: 1, b: 2}
   console.log(event.keyCode);
 })
 
@@ -119,6 +154,9 @@ window.addEventListener("keydown", event => {
 //   }
 //   console.log(event.keyCode);
 // })
+
+
+
 
 </script>
 </body>

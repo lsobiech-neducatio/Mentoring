@@ -99,7 +99,7 @@
           result.innerText = "PESEL number is too long!";
     } else if (peselInput.length == 0) {
       result.innerText = "'PESEL' cannot be empty!";
-    } else if (10-(sum % 10) != checkSum) {
+    } else if ((10-(sum % 10))%10 != checkSum) {
         result.innerText = "PESEL is invalid!";
     } else {
 

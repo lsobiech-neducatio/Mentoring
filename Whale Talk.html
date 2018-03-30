@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+  <p>Human to Whale translator</p>
+  <input id="human" placeholder="Enter your text..."/>
+  <button id="start">TRANSLATE</button>
+  <p><input id="result"/></p>
+
+
+<script>
+
+  const start = document.getElementById("start");
+  const input = document.getElementById("human");
+  const result = document.getElementById("result");
+
+  const vowels = ["a", "e", "i", "o", "u"];
+  let resultArray;
+
+
+  let translate = (input) => {
+    resultArray = [];
+    for (let i = 0; i < input.length; i++) {
+
+      for (let j = 0; j < vowels.length; j++) {
+        if (input[i] === vowels[j]) {
+          resultArray.push(input[i]);
+        }
+      }
+      if (input[i] === "e" || input[i] === "u") {
+        resultArray.push(input[i]);
+      }
+    }
+
+    result.value = resultArray.join('').toUpperCase();
+  };
+
+
+  start.addEventListener("click", function() {
+    translate(input.value);
+  });
+
+</script>
+</body>
+</html>
