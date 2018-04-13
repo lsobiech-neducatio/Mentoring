@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<script>
+
+  let team = {
+
+    _players: [
+      {firstName: "Pablo",
+      lastName: "Sanchez",
+      age: 11},
+
+      {firstname: "Lionel",
+      lastName: "Messi",
+      age: 30},
+
+      {firstName: "Ronaldinho",
+      lastname: "Gaúcho",
+      age: 38,
+    }
+  ],
+  get players() {
+    return this._players;
+  },
+
+    _games: [{
+      opponent: "Broncos",
+      teamPoints: 42,
+      opponentPoints: 27
+    }, {
+      opponent: "Team 2",
+      teamPoints: 55,
+      opponentPoints: 51
+    }, {
+      opponent: "Team 3",
+      teamPoints: 28,
+      opponentPoints: 61
+    }],
+    get games() {
+      return this._games;
+    },
+
+    addPlayer(firstName, lastName, age) {
+      const player = {
+        firstName: firstName,
+        lastName: lastName,
+        age: age
+      };
+      this._players.push(player);
+    },
+
+
+    addGame(opponent, teamPoints, opponentPoints) {
+      const game = {
+        opponent: opponent,
+        teamPoints: teamPoints,
+        opponentPoints: opponentPoints
+      };
+      this._games.push(game);
+    }
+  };
+
+
+  team.addPlayer("Steph", "Curry", 28);
+  team.addPlayer("Lisa", "Leslie", 44);
+  team.addPlayer("Bugs", "Bunny", 76);
+  team.addGame("Team 4", 60, 44);
+  team.addGame("Team 5", 56, 51);
+  team.addGame("Team 6", 33, 48);
+
+  console.log(team);
+
+</script>
+</body>
+</html>

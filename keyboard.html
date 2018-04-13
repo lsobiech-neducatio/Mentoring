@@ -19,7 +19,7 @@
   </style>
 </head>
 <body>
-  <label>Icebox size: <input id="boxSize" type="number" value="300"/></label>
+  <label>Icebox size: <input id="boxSize" type="number" value="30"/></label>
   <label>Particle size: <input id="particleSize" type="number" value="10"/></label>
   <button id="button">START</button>
   <div id="icebox">
@@ -35,15 +35,14 @@ let maxPosition;
 let particle = document.getElementById("particle");
 
 function displayParticle() {
-  console.log(pSize)
   particle.classList.add("particle");
   particle.style.height = `${pSize}px`;
   particle.style.width = `${pSize}px`;
   particle.style.backgroundColor = "#000";
   particle.style.position = "absolute";
   const size = boxSize.value;
-  const x = Math.floor(Math.random() * (size - pSize) / pSize)*pSize;
-  const y = Math.floor(Math.random() * (size - 1)); // -> tak ma być
+  const x = Math.floor(Math.random() * (size - 1));
+  const y = Math.floor(Math.random() * (size - 1));
 
 
   particle.x = x;
@@ -86,8 +85,8 @@ let displayIcebox = () => {
   const size = boxSize.value;
 
 //  document.body.appendChild(icebox);
-  icebox.style.height = `${size * pSize}px`; // tak ma być
-  icebox.style.width = `${size}px`;
+  icebox.style.height = `${size * pSize}px`;
+  icebox.style.width = `${size * pSize}px`;
   icebox.style.border = "thick solid #000";
   icebox.style.position = "relative";
   // return icebox;
@@ -113,11 +112,11 @@ window.addEventListener("keydown", event => {
       // particle.style.transform = `translateX(-10px)`;
     break;
     case 38: // up
-    particle.y -= pSize;
+    particle.y -= 1
       // particle.style.transform = `translateY(-10px)`;
     break;
     case 40: // down
-    particle.y += pSize;
+    particle.y += 1;
       // particle.sty le.transform = `translateY(10px)`;
     break;
   }

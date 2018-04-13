@@ -4,16 +4,24 @@
   <title>Icebox</title>
   <style>
 
+    #icebox {
+        margin-top: 10px;
+        }
+
   </style>
 </head>
 <body>
-  <label>Icebox size: </label> <input id="boxSize" type="number" value="300"/>
-  <label>Particles: </label><input id="particlesNum" type="number" value="500"/>
+  <label>Icebox size: </label> <input id="boxSize" type="number" value="30"/>
+  <label>Particles: </label><input id="particlesNum" type="number" value="300"/>
+  <label>Particle size: <input id="particleSize" type="number" value="10"/></label>
   <button id="button">START</button>
   <div id="icebox"></div>
-  <div id="particle"></div>
+
 
 <script>
+let int;
+const particleSize = document.getElementById("particleSize");
+let pSize;
 const boxSize = document.getElementById("boxSize");
 let particles = [];
 
@@ -24,17 +32,18 @@ let displayParticle = () => {
   for (let i = 0; i < particlesNum.value; i++) {
     const particle = document.createElement("div");
     icebox.appendChild(particle);
-    particle.style.height = "10px";
-    particle.style.width = "10px";
+    particle.style.height = `${pSize}px`;
+    particle.style.width = `${pSize}px`;
     particle.style.backgroundColor = "#000";
     particle.style.position = "absolute";
     const size = boxSize.value;
-    const x = Math.random() * (size - 10);
-    const y = Math.random() * (size - 10);
+    const x = Math.floor(Math.random() * size);
+    const y = Math.floor(Math.random() * size);
 
+    particle.x = x;
+    particle.y = y;
 
-
-    particle.style.transform = `translate(${x}px, ${y}px)`;
+    particle.style.transform = `translate(${x * pSize}px, ${y * pSize}px)`;
     particles[i] = particle;
   }
   console.log(particles)
@@ -42,7 +51,7 @@ let displayParticle = () => {
 
 let displayIcebox = () => {
   const icebox = document.getElementById("icebox");
-  const size = boxSize.value;
+  const size = boxSize.value * pSize;
 
   document.body.appendChild(icebox);
   icebox.style.height = `${size}px`;
@@ -62,18 +71,49 @@ let clearIcebox = () => {
 
 const button = document.getElementById("button");
 button.addEventListener("click", () => {
+  pSize = Number(particleSize.value);
   clearIcebox();
-  displayIcebox(boxSize.value, particlesNum.value);
+  displayIcebox();
   displayParticle();
 
 });
 
 function draw() {
   console.log('draw')
+  for(let i = 0; i < particles.length; i++){
+    let particle = particles[i];
+    let direction = Math.floor(Math.random() * 8);
+    console.dir(particle)
+    switch (direction) {
+      case 0:
+      console.log('ZERO!!!')
+        particle.x -= 1;
+        particle.y -= 1;
+        break;
+      default:
+      // 1 .if cząsteczka dotyka borderu = isFrozen
+      // 2. if 1/8 cząsteczek na około (pozycja mojej cząsteczki -/+1 (8 kierunków)) isFrozen (loop w loopie) = isFrozen
+
+    }
+    particle.style.transform = `translate(${particle.x*pSize}px, ${particle.y*pSize}px)`;
+
+  }
   //przesuń particla w losową stronę (po gridzie) -> Math.random(8 kierunków)
+  //const move = Math.floor(Math.random);
+  // particle.style.transform = `translateX(${particle.x - 1}px)`;
+  // particle.style.transform = `translateX(${particle.x + 1}px)`;
+  // particle.style.transform = `translateY(${particle.y - 1}px)`;
+  // particle.style.transform = `translateY(${particle.y + 1}px)`;
+  // particle.style.transform = `translate(${particle.x - 1}px, ${particle.y - 1}px)`;
+  // particle.style.transform = `translate(${particle.x + 1}px, ${particle.y + 1}px)`;
+  // particle.style.transform = `translate(${particle.x - 1}px, ${particle.y + 1}px)`;
+  // particle.style.transform = `translate(${particle.x + 1}px, ${particle.y - 1}px)`;
+
+// jeśli wszystkie już zamarzły:
+  //clearInterval(int)
 }
 
-setInterval(draw, 1000);
+int = setInterval(draw, 1000);
 
 </script>
 </body>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>Snake</title>
+  <style>
+
+    #icebox {
+      margin-top: 15px;
+    }
+
+    #particle, #food {
+      border-radius: 50%;
+    }
+
+  </style>
+</head>
+<body>
+  <button id="button">PLAY</button>
+  <div id="icebox">
+  <div id="food"></div>
+  </div>
+
+
+<script>
+let int;
+const boxSize = 40;
+const particleSize = 10;
+let maxPosition;
+
+const snake = [];
+
+function createParticle(x,y) {
+  const particle = document.createElement('div');
+  icebox.appendChild(particle);
+  particle.classList.add("particle");
+  particle.style.height = `${particleSize}px`;
+  particle.style.width = `${particleSize}px`;
+  particle.style.backgroundColor = "#27f75e";
+  particle.style.position = "absolute";
+
+  particle.x = x;
+  particle.y = y;
+  particle.style.transform = `translate(${x * particleSize}px, ${y * particleSize}px)`;
+
+  return particle;
+}
+
+
+let displayIcebox = () => {
+  const icebox = document.getElementById("icebox");
+
+  icebox.style.height = `${boxSize * particleSize}px`;
+  icebox.style.width = `${boxSize * particleSize}px`;
+  icebox.style.border = "thick solid grey";
+  icebox.style.backgroundColor = "#000";
+  icebox.style.position = "relative";
+}
+
+let displayFood = () => {
+  const food = document.getElementById("food");
+  food.classList.add("food");
+  food.style.height = `${particleSize}px`;
+  food.style.width = `${particleSize}px`;
+  food.style.backgroundColor = "red";
+  food.style.position = "absolute";
+
+  const x = Math.floor(Math.random() * (boxSize - 1));
+  const y = Math.floor(Math.random() * (boxSize - 1));
+
+
+  food.x = x;
+  food.y = y;
+  food.style.transform = `translate(${x * particleSize}px, ${y * particleSize}px)`;
+}
+
+const button = document.getElementById("button");
+button.addEventListener("click", () => {
+  maxPosition = boxSize - 1;
+  displayIcebox();
+  const x = Math.floor(Math.random() * (boxSize - 1));
+  const y = Math.floor(Math.random() * (boxSize - 1));
+
+  snake.push(createParticle(x, y));
+  snake.push(createParticle(x, y+1));
+  snake.push(createParticle(x, y+2));
+  displayFood();
+});
+
+const direction = { x: 0, y: 1 };
+window.addEventListener("keydown", event => {
+  console.dir(particle)
+  switch(event.keyCode) {
+
+    case 39: // right
+    // particle.x += 1;
+    direction.x = 1;
+    direction.y = 0;
+    break;
+
+    case 37: // left
+    direction.x = -1;
+    direction.y = 0;
+    break;
+
+    case 38: // up
+    direction.x = 0;
+    direction.y = -1;
+    break;
+
+    case 40: // down
+    direction.x = 0;
+    direction.y = 1;
+    break;
+  }
+
+
+  // if(particle.x > maxPosition) particle.x = maxPosition;
+  // if(particle.y > maxPosition) particle.y = maxPosition;
+  // if(particle.x < 0) particle.x = 0;
+  // if(particle.y < 0) particle.y = 0;
+
+
+  // particle.style.transform = `translate(${particle.x * particleSize}px, ${particle.y * particleSize}px)`;
+
+  console.log(event.keyCode);
+})
+
+function draw() {
+//pętla iterująca po arrayu w snake -> nshift - dodanie glowy, pop-usuniecie ogona
+//food nie może sie wyswietlac na wezu (while)
+
+  particle.x += direction.x;
+  particle.y += direction.y;
+  particle.style.transform = `translate(${particle.x*particleSize}px, ${particle.y*particleSize}px)`;
+}
+
+int = setInterval(draw, 200);
+
+// [{x:5, y:5}, {x:6, y:5}, {x:6, y:6}]
+
+// [{x:5, y:4}, {x:5, y:5}, {x:6, y:5}]
+
+</script>
+</body>
+</html>
