@@ -11,7 +11,6 @@ body, input, button {
 
 header {
   width: 100%;
-  height: 90px;
   position: fixed;
   padding: 15px;
   top: 0;
@@ -25,8 +24,6 @@ header {
 
 header input {
   width: 100%;
-  height: 60px;
-  float: left;
   background: #00838f;
   color: #fff;
   font-size: 18px;
@@ -44,10 +41,11 @@ header input::-webkit-input-placeholder {
 }
 
 header button {
-  width: 65px;
-  height: 65px;
+  width: 66px;
+  height: 66px;
   position: absolute;
-  top: 13px;
+  top: 50%;
+  transform: translateY(-50%);
   right: 13px;
   z-index: 2;
   border-radius: 50%;
@@ -59,43 +57,57 @@ header button {
 
 .container {
   width: 100%;
-  float: left;
   padding: 15px;
 }
 ul.todoList {
   width: 100%;
-  float: left;
 }
 
 ul.todoList li {
+  display: flex;
+  align-items: center;
   width: 100%;
-  float: left;
-  height: 50px;
+  min-height: 50px;
   margin-bottom: 10px;
-  backgorund: #fff;
+  background: #fff;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(44, 62, 80, 0.15);
+  box-shadow: 0 1px 2px rgba(44, 62, 80, 0.1);
   position: relative;
-  padding-right: 100px;
+  padding: 15px 100px 15px 15px;
   font-size: 16px;
+}
+
+ul.todoList li > p:first-child {
+  flex: 1;
+}
+
+ul.todoList li > .buttons {
+  display: inline-block;
+  position: relative;
+  line-height: 1;
+  white-space: nowrap;
+  height: 16px;
+  flex: none;
+  margin-left: 30px;
+}
+
+ul.todoList li > .buttons:after {
+  content: '';
+  height: 100%;
+  width: 1px;
+  background: #e8e8e8;
+  position: absolute;
+  left: 50%;
+  top: 0;
 }
 
 ul.todoList li:last-of-type {
   margin-bottom: 0;
 }
 
-ul.todoList li button {
-  width: 100px;
-  height: 50px;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
 
 ul.todoList li .buttons button {
-  height: 50px;
-  width: 50px;
-  float: left;
+  line-height: 1;
   background: none;
   border: 0;
   outline: none;
@@ -103,12 +115,49 @@ ul.todoList li .buttons button {
   position: relative;
 }
 
-/* ul.todoList li .buttons button:last-of-type:before {
-  content: "";
-  width: 1px;
-  height: 30px;
+ul.todoList li .buttons button + button {
+  margin-left: 20px;
+}
+
+ul.todoList li .buttons button > svg {
+  height: 18px;
+  width: 18px;
+}
+
+#add {
+  color: #005662;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#completedTodos {
+  position: relative;
+  padding: 60px 0 0 0;
+}
+
+#completedTodos:before {
+  content: '';
+  width: 200px;
+  height: 2px;
+  background: rgba(0, 131, 143, 0.1);
   position: absolute;
-  top: 10px;
-  left: 0;
-  background: #e8e8e8;
-} */
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#completedTodos:after {
+  content: "You haven't completed any tasks yet.";
+  }
+
+#todoList:after, #completedTodos:after {
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  color: #aaa;
+}
+
+#remove, #completed {
+  cursor: pointer;
+}
