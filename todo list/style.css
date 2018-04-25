@@ -55,7 +55,7 @@ header button {
   cursor: pointer;
 }
 
-.container {
+.main-container {
   width: 100%;
   padding: 15px;
 }
@@ -66,7 +66,7 @@ ul.todoList {
 ul.todoList li {
   display: flex;
   align-items: center;
-  width: 100%;
+  /* width: 100%; */
   min-height: 50px;
   margin-bottom: 10px;
   background: #fff;
@@ -87,18 +87,8 @@ ul.todoList li > .buttons {
   line-height: 1;
   white-space: nowrap;
   height: 16px;
-  flex: none;
-  margin-left: 30px;
-}
-
-ul.todoList li > .buttons:after {
-  content: '';
-  height: 100%;
-  width: 1px;
-  background: #e8e8e8;
-  position: absolute;
-  left: 50%;
-  top: 0;
+  /* flex: none; */
+  margin-left: auto;
 }
 
 ul.todoList li:last-of-type {
@@ -158,6 +148,66 @@ ul.todoList li .buttons button > svg {
   color: #aaa;
 }
 
-#remove, #completed {
+.btn-remove {
   cursor: pointer;
+}
+
+label {
+  display: block;
+}
+label input[type=checkbox]:checked + p {
+  text-decoration: line-through;
+}
+
+.container {
+  position: relative;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+  margin: 0 5px 0 30px;
+}
+
+.checkmark:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    background-color: #eee;
+    border: 2px solid #005662;
+    border-radius: 2px;
+    transform: translateY(-50%);
+}
+
+.container:hover input ~ .checkmark:before {
+    background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark:before {
+    background-color: #00838f;
+}
+
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.container .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: calc(50% - 7px);
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
 }
