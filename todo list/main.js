@@ -5,7 +5,7 @@ let allTodos = [];
 
 
 var req = new XMLHttpRequest();
-req.open('GET', 'http://192.168.103.23:8080/todo.json', true);
+req.open('GET', 'http://localhost:1337/todo', true);
 req.onreadystatechange = function (aEvt) {
   if (req.readyState == 4) {
      if (req.status == 200) {
@@ -41,8 +41,7 @@ function create(todo) {
   list.appendChild(item);
 
   item.innerHTML = `<div class="container"><input type="checkbox"><p class="checkmark">
-  ${todo.item}</p></div><div class="buttons"><button class="btn-edit">
-  <i class="far fa-edit"></i></button><button class="btn-remove"><i class="far fa-trash-alt"></i></button></div>`;
+  ${todo.item}</p></div><div class="buttons"><button class="btn-remove"><i class="far fa-trash-alt"></i></button></div>`;
 
     const checkbox = item.getElementsByTagName('input')[0];
   // checkbox.addEventListener('change', (event) => {
