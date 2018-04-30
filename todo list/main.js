@@ -1,84 +1,59 @@
 
 let newTodo = document.getElementById("newTodo");
 let list = document.getElementsByClassName("todoList")[0];
-let allTodos = [];
+
+  // GET (pobieranie całej listy)
+
+  fetch(`http://localhost:1337/todo/`)
+    .then(list => list.json().then(result => result.forEach(item => create(item))))
+    .catch(err => console.log(err))
 
 
-var req = new XMLHttpRequest();
-req.open('GET', 'http://localhost:1337/todo', true);
-req.onreadystatechange = function (aEvt) {
-  if (req.readyState == 4) {
-     if (req.status == 200) {
-      const data = JSON.parse(req.responseText);
-      console.dir(data); //createTodo
-      data.forEach(item => create(item));
-
-    } else {
-      console.log("Błąd podczas ładowania strony\n"); //komunikat o błędzie dla użytkownika
-    }
-  }
-};
-req.send(null);
-
-
-// // update data in json
-// const dataUpdated = () => {
-//   localStorage.setItem("todoList", JSON.stringify(data));
-// };
-//
-// // add todoes to the array
-// const addItem = ("li") => {
-//   createTodo("li");
-//
-//   allTodos.push("li");
-//   dataUpdated();
-// };
-
-// {item: '', done: false}
+// todo jest w postaci: {item: '', done: false, id: 0}
 function create(todo) {
   // add a new todo to the list
   let item = document.createElement("li");
+  item.setAttribute('data-id', todo.id);
   list.appendChild(item);
 
-  item.innerHTML = `<div class="container"><input type="checkbox"><p class="checkmark">
-  ${todo.item}</p></div><div class="buttons"><button class="btn-remove"><i class="far fa-trash-alt"></i></button></div>`;
+  let id = `check-${todo.id}`;
 
-    const checkbox = item.getElementsByTagName('input')[0];
-  // checkbox.addEventListener('change', (event) => {
-    //zapisać na serwerze
-  // });
+  item.innerHTML = `<div class="container"><input type="checkbox" class="check" id="${id}"/><label for="${id}"></label>
+  <input type="Text" class="checkmark" value="${todo.item}"></div><div class="buttons"><button class="btn-remove"><i class="far fa-trash-alt"></i></button></div>`;
+
+  const checkbox = item.getElementsByTagName('input')[0];
+  const text = item.getElementsByTagName('input')[1];
+  const editFunction = (event) => {
+    // TODO
+    console.log('edit');
+  };
+  checkbox.addEventListener('change', editFunction);
+  text.addEventListener('change', editFunction);
 
   const removeButton = item.getElementsByClassName('btn-remove')[0];
   removeButton.addEventListener("click", () => {
     list.removeChild(item);
-  });
-
-  const editable = item.getElementsByTagName("p")[0];
-  //const editButton = item.getElementsByClassName('btn-edit')[0];
-  editable.addEventListener("mousedown", () => {
-    console.log('click')
-
-    editable.contentEditable = "true";
-    editable.addEventListener("keydown", function(event) {
-
-      if (event.keyCode === 13) {
-        event.preventDefault();
-        editable.contentEditable = "false";
-      }
-    });
+    let id = item.getAttribute('data-id');
+    console.log(id);
+    // TODO: fetch delete
   });
 
   // place a new todo on the top of the list
   list.insertBefore(item, list.childNodes[0]);
-}
 
+}
 
 const createTodo = () => {
 
   // if input field is not empty, add the new todo to the list
   if (newTodo.value && newTodo.value.length) {
 
-    create({item: newTodo.value, done: false});
+    fetch(`http://localhost:1337/todo/`, {
+      method: 'POST',
+      body: JSON.stringify({item: newTodo.value, done: false})
+    })
+      .then(todo => todo.json().then(result => create(result)))
+      .catch(err => console.log(err))
 
     document.getElementById("newTodo").value = "";
   }
