@@ -3,7 +3,6 @@ let newTodo = document.getElementById("newTodo");
 let list = document.getElementsByClassName("todoList")[0];
 
   // GET (pobieranie całej listy)
-
   fetch(`http://localhost:1337/todo/`)
     .then(list => list.json().then(result => result.forEach(item => create(item))))
     .catch(err => console.log(err))
@@ -23,19 +22,34 @@ function create(todo) {
 
   const checkbox = item.getElementsByTagName('input')[0];
   const text = item.getElementsByTagName('input')[1];
+
+  // edit a todo
   const editFunction = (event) => {
-    // TODO
-    console.log('edit');
+    item.done = true;
+
+    fetch(`http://localhost:1337/todo/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({item: text.value, done: false})
+    })
+      .then(list => console.log(list.json()))
+    .catch(err => console.log(err))
   };
+
   checkbox.addEventListener('change', editFunction);
   text.addEventListener('change', editFunction);
 
+// remove a todo
   const removeButton = item.getElementsByClassName('btn-remove')[0];
   removeButton.addEventListener("click", () => {
     list.removeChild(item);
     let id = item.getAttribute('data-id');
     console.log(id);
-    // TODO: fetch delete
+
+    fetch(`http://localhost:1337/todo/${id}`, {
+      method: 'DELETE',
+    })
+      .then(list => console.log(list.json()))
+    .catch(err => console.log(err))
   });
 
   // place a new todo on the top of the list
@@ -43,6 +57,7 @@ function create(todo) {
 
 }
 
+//create todo
 const createTodo = () => {
 
   // if input field is not empty, add the new todo to the list

@@ -125,21 +125,6 @@ ul.todoList li .buttons button > svg {
   padding: 60px 0 0 0;
 }
 
-#completedTodos:before {
-  content: '';
-  width: 200px;
-  height: 2px;
-  background: rgba(0, 131, 143, 0.1);
-  position: absolute;
-  top: 35px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-#completedTodos:after {
-  content: "You haven't completed any tasks yet.";
-  }
-
 #todoList:after, #completedTodos:after {
   width: 100%;
   display: block;
@@ -204,7 +189,7 @@ label input[type=checkbox]:checked + p {
     display: none;
     left: 6px;
     top: calc(50% - 7px);
-    width: 4px;
+    width: 3px;
     height: 8px;
     border: solid white;
     border-width: 0 3px 3px 0;
