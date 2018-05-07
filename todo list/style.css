@@ -34,6 +34,7 @@ header input {
   border-bottom-left-radius: 5px;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
+  text-overflow: ellipsis;
 }
 
 header input::-webkit-input-placeholder {
@@ -84,10 +85,9 @@ ul.todoList li > p:first-child {
 ul.todoList li > .buttons {
   display: inline-block;
   position: relative;
-  line-height: 1;
+  line-height: 20px;
   white-space: nowrap;
-  height: 16px;
-  /* flex: none; */
+  height: 20px;
   margin-left: auto;
 }
 
@@ -140,12 +140,16 @@ ul.todoList li .buttons button > svg {
 label {
   display: block;
 }
-label input[type=checkbox]:checked + p {
+
+.container input[type=checkbox]:checked ~ .checkmark {
   text-decoration: line-through;
+  color: #888;
 }
 
 .container {
   position: relative;
+  display: flex;
+  flex-grow: 1;
 }
 
 /* Hide the browser's default checkbox */
@@ -166,13 +170,16 @@ label input[type=checkbox]:checked + p {
 }
 
 .checkmark {
-  margin: 0 5px 0 30px;
+  margin: 0 10px 0 15px;
   border: 0;
   float: left;
+  outline-color: transparent;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .container:hover input ~ label {
-    background-color: #ccc;
+    cursor: pointer;
 }
 
 .container input:checked ~ label {

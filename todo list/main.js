@@ -8,45 +8,43 @@ let list = document.getElementsByClassName("todoList")[0];
     .catch(err => console.log(err))
 
 
-// todo jest w postaci: {item: '', done: false, id: 0}
+// todo jest w postaci: {item: "", done: false, id: 0}
 function create(todo) {
   // add a new todo to the list
   let item = document.createElement("li");
-  item.setAttribute('data-id', todo.id);
+  item.setAttribute("data-id", todo.id);
   list.appendChild(item);
 
   let id = `check-${todo.id}`;
 
-  item.innerHTML = `<div class="container"><input type="checkbox" class="check" id="${id}"/><label for="${id}"></label>
-  <input type="Text" class="checkmark" value="${todo.item}"></div><div class="buttons"><button class="btn-remove"><i class="far fa-trash-alt"></i></button></div>`;
+  item.innerHTML = `<div class="container"><input type="checkbox" ${todo.done ? 'checked="checked"' : ''} class="check" id="${id}"/><label for="${id}"></label>
+  <input type="text" class="checkmark" value="${todo.item}"></div><div class="buttons"><button class="btn-remove"><i class="far fa-trash-alt"></i></button></div>`;
 
-  const checkbox = item.getElementsByTagName('input')[0];
-  const text = item.getElementsByTagName('input')[1];
+  const checkbox = item.getElementsByTagName("input")[0];
+  const text = item.getElementsByTagName("input")[1];
 
   // edit a todo
   const editFunction = (event) => {
-    item.done = true;
-
-    fetch(`http://localhost:1337/todo/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({item: text.value, done: false})
+    
+    fetch(`http://localhost:1337/todo/${todo.id}`, {
+      method: "PATCH",
+      body: JSON.stringify({item: text.value, done: checkbox.checked})
     })
-      .then(list => console.log(list.json()))
     .catch(err => console.log(err))
   };
 
-  checkbox.addEventListener('change', editFunction);
-  text.addEventListener('change', editFunction);
+  checkbox.addEventListener("change", editFunction);
+  text.addEventListener("change", editFunction);
 
 // remove a todo
-  const removeButton = item.getElementsByClassName('btn-remove')[0];
+  const removeButton = item.getElementsByClassName("btn-remove")[0];
   removeButton.addEventListener("click", () => {
     list.removeChild(item);
-    let id = item.getAttribute('data-id');
+    let id = item.getAttribute("data-id");
     console.log(id);
 
     fetch(`http://localhost:1337/todo/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     })
       .then(list => console.log(list.json()))
     .catch(err => console.log(err))
@@ -64,7 +62,7 @@ const createTodo = () => {
   if (newTodo.value && newTodo.value.length) {
 
     fetch(`http://localhost:1337/todo/`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({item: newTodo.value, done: false})
     })
       .then(todo => todo.json().then(result => create(result)))
