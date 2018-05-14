@@ -2,16 +2,20 @@
 
 body {
   background: #e8e8e8;
-  padding-top: 90px;
 }
 
 body, input, button {
   font-family: 'Lato', sans-serif;
 }
 
+.main {
+  margin: auto;
+  width: 600px;
+}
+
 header {
   width: 100%;
-  position: fixed;
+  position: sticky;
   padding: 15px;
   top: 0;
   left: 0;
@@ -141,7 +145,7 @@ label {
   display: block;
 }
 
-.container input[type=checkbox]:checked ~ .checkmark {
+.container input[type=checkbox]:checked ~ .todo-txt {
   text-decoration: line-through;
   color: #888;
 }
@@ -169,7 +173,7 @@ label {
   float: left;
 }
 
-.checkmark {
+.todo-txt {
   margin: 0 10px 0 15px;
   border: 0;
   float: left;
@@ -194,10 +198,10 @@ label {
     content: "";
     position: absolute;
     display: none;
-    left: 6px;
-    top: calc(50% - 7px);
+    left: 5px;
+    top: calc(50% - 6px);
     width: 3px;
-    height: 8px;
+    height: 7px;
     border: solid white;
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
