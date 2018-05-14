@@ -3,7 +3,7 @@ let newTodo = document.getElementById('newTodo');
 let list = document.getElementsByClassName('todoList')[0];
 
 // GET (pobieranie całej listy)
-fetch(`http://localhost:1337/todo/`)
+fetch(`http://todo-lidia.fatco.de/todo`)
   .then(list => list.json().then(result => result.forEach(item => create(item))))
   .catch(err => console.log(err))
 
@@ -26,7 +26,7 @@ function create(todo) {
   // edit a todo
   const editFunction = (event) => {
 
-    fetch(`http://localhost:1337/todo/${todo.id}`, {
+    fetch(`http://todo-lidia.fatco.de/todo${todo.id}`, {
       method: 'PATCH',
       body: JSON.stringify({item: text.value, done: checkbox.checked})
     })
@@ -42,7 +42,7 @@ function create(todo) {
     list.removeChild(item);
     let id = item.getAttribute('data-id');
 
-    fetch(`http://localhost:1337/todo/${id}`, {
+    fetch(`http://todo-lidia.fatco.de/todo${id}`, {
       method: 'DELETE',
     })
     .catch(err => console.log(err))
@@ -59,7 +59,7 @@ const createTodo = () => {
   // if input field is not empty, add the new todo to the list
   if (newTodo.value && newTodo.value.length) {
 
-    fetch(`http://localhost:1337/todo/`, {
+    fetch(`http://todo-lidia.fatco.de/todo`, {
       method: 'POST',
       body: JSON.stringify({item: newTodo.value, done: false})
     })
