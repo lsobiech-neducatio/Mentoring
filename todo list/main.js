@@ -3,7 +3,7 @@ let newTodo = document.getElementById('newTodo');
 let list = document.getElementsByClassName('todoList')[0];
 
 // GET (pobieranie całej listy)
-fetch(`http://todo-lidia.fatco.de/todo`)
+fetch(`http://todo-lidia.fatco.de/todo/`)
   .then(list => list.json().then(result => result.forEach(item => create(item))))
   .catch(err => console.log(err))
 
@@ -26,7 +26,7 @@ function create(todo) {
   // edit a todo
   const editFunction = (event) => {
 
-    fetch(`http://todo-lidia.fatco.de/todo${todo.id}`, {
+    fetch(`http://todo-lidia.fatco.de/todo/${todo.id}`, {
       method: 'PATCH',
       body: JSON.stringify({item: text.value, done: checkbox.checked})
     })
@@ -34,7 +34,15 @@ function create(todo) {
   };
 
   checkbox.addEventListener('change', editFunction);
-  text.addEventListener('change', editFunction);
+  text.addEventListener('blur', editFunction);
+  // finish editing a todo using 'enter' button
+  text.addEventListener('keyup', function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      text.blur();
+    }
+  });
+
 
 // remove a todo
   const removeButton = item.getElementsByClassName('btn-remove')[0];
@@ -42,7 +50,7 @@ function create(todo) {
     list.removeChild(item);
     let id = item.getAttribute('data-id');
 
-    fetch(`http://todo-lidia.fatco.de/todo${id}`, {
+    fetch(`http://todo-lidia.fatco.de/todo/${id}`, {
       method: 'DELETE',
     })
     .catch(err => console.log(err))
@@ -59,7 +67,7 @@ const createTodo = () => {
   // if input field is not empty, add the new todo to the list
   if (newTodo.value && newTodo.value.length) {
 
-    fetch(`http://todo-lidia.fatco.de/todo`, {
+    fetch(`http://todo-lidia.fatco.de/todo/`, {
       method: 'POST',
       body: JSON.stringify({item: newTodo.value, done: false})
     })
@@ -78,7 +86,6 @@ newTodo.addEventListener('keyup', function(event) {
     createTodo();
   }
 });
-
 
 // click on the 'add' button
 document.getElementById('add').addEventListener('click', createTodo);
