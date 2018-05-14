@@ -11,6 +11,7 @@ body, input, button {
 .main {
   margin: auto;
   width: 600px;
+  overflow: auto;
 }
 
 header {
